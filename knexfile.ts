@@ -8,6 +8,7 @@ const config: { [key: string]: Knex.Config } = {
             host: process.env.PG_HOST,
             password: process.env.PG_PASSWORD,
             user: process.env.PG_USER,
+            ssl: false
         },
         pool: {
             min: 2,
@@ -15,7 +16,7 @@ const config: { [key: string]: Knex.Config } = {
         },
         migrations: {
             tableName: "knex_migrations"
-        }
+        },
     }
 };
 
