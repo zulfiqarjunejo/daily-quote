@@ -7,13 +7,15 @@
     "build": "npx tsc && cp -r views dist",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "start:dev": "npx nodemon",
+    "start:dev": "npx knex migrate:latest --env all && npx nodemon",
     "test": "jest --detectOpenHandles --verbose"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "knex": "^3.1.0",
+    "pg": "^8.11.5",
     "postgres": "^3.4.3"
   },
   "devDependencies": {
