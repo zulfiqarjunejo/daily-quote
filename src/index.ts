@@ -1,18 +1,10 @@
-import dotenv from "dotenv";
 import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { QuotableQuotationService, QuotationService } from "./quotation.service";
 
-dotenv.config();
-
 async function main() {
-    const evergreenQuote = process.env.EVERGREEN_QUOTE;
-    if (!evergreenQuote) {
-        throw new Error("Evergreen Quote is undefined!");
-    }
-
-    const port = process.env.PORT;
+    const port = process.env.PORT || 3000;
     if (!port) {
         throw new Error("Port is undefined!");
     }
@@ -22,13 +14,13 @@ async function main() {
         throw new Error("Url for Quotable API is undefined!");
     }
 
-    const quotationService: QuotationService = new QuotableQuotationService(quotableApiUrl, evergreenQuote);
+    const quotationService: QuotationService = new QuotableQuotationService(quotableApiUrl);
 
     const server = http.createServer(async (req, res) => {
         const quote = await quotationService.getQuotation();
 
         const file = fs.readFileSync(path.resolve(__dirname, "../views/index.html"));
-        const content = file.toString().replace("{{quote}}", quote);
+        const content = file.toString().replace("{{quote}}", quote).replace("{{port}}", port as string);
 
         res.writeHead(200);
         res.write(content);

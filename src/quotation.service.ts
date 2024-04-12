@@ -5,18 +5,21 @@ export interface QuotationService {
 }
 
 export class QuotableQuotationService implements QuotationService {
-    private defaultQuote: string;
+    private defaultQuote: string = "Hola!";
     private url: string;
 
-    constructor(url: string, defaultQuote: string) {
-        this.defaultQuote = defaultQuote;
+    constructor(url: string) {
         this.url = url;
     }
 
     async getQuotation(): Promise<string> {
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
         const queryResult = await db.queryBuilder()
             .select("text")
             .from("quotation")
+            .where("created_at", ">", currentDate)
             .orderBy("created_at", "desc")
             .limit(1);
 

@@ -1,13 +1,13 @@
 {
   "name": "daily-quote",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
   "scripts": {
-    "build": "npx tsc && cp -r views dist",
+    "build": "tsc && cp -r views dist",
+    "dev": "npx knex migrate:latest --env all && npx nodemon",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "start:dev": "npx knex migrate:latest --env all && npx nodemon",
+    "prestart": "node ./node_modules/knex/bin/cli.js --knexfile ./dist/knexfile.js migrate:latest --env all",
+    "start": "node ./dist/src/index.js",
     "test": "jest --detectOpenHandles --verbose"
   },
   "author": "",
@@ -32,6 +32,6 @@
     "testcontainers": "^10.7.1",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   }
 }

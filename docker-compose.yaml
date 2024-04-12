@@ -28,4 +28,4 @@ services:
       - 9001:9001
     volumes:
       - ./:/usr/src/app
-    command: npm run start:dev
+    command: npm run dev
